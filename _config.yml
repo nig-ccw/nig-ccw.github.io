@@ -1,6 +1,5 @@
 theme: jekyll-theme-cayman
-title: 研修之路
-subtitle: 实践为王
+title: 研修之路【实践为王】
 gitalk:
     owner: nig-ccw
     repo: comments

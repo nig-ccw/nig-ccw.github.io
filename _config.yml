@@ -1,1 +1,7 @@
 theme: jekyll-theme-cayman
+title: 研修之路【实践为王】
+gitalk:
+    owner: nig-ccw
+    repo: comments
+    clientID: aa4921b59b2d7d3197ca
+    clientSecret: e4e4ddbb81ffcccf5ce4d265099ebf5656be1417

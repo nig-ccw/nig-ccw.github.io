@@ -1,5 +1,2 @@
 theme: jekyll-theme-cayman
-webrick: 
-  headers:
-    My-Header: 研修之路
-    My-Other-Header: 经验为王
+titlw: 研修之路

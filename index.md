@@ -1,3 +1,3 @@
 ## 常用文档
-- [Spring](document/spring/index.md)
+- Spring - [中文版](document/spring/index.md)  [英文版](document/spring_en/index.md)
 - Spring Boot

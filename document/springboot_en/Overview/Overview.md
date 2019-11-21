@@ -1,0 +1,44 @@
+## 1. First Steps
+
+If you are getting started with Spring Boot or 'Spring' in general, start with [the following topics](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/getting-started.html#getting-started):
+
+- **From scratch:** [Overview](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/getting-started.html#getting-started-introducing-spring-boot) | [Requirements](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/getting-started.html#getting-started-system-requirements) | [Installation](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/getting-started.html#getting-started-installing-spring-boot)
+- **Tutorial:** [Part 1](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/getting-started.html#getting-started-first-application) | [Part 2](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/getting-started.html#getting-started-first-application-code)
+- **Running your example:** [Part 1](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/getting-started.html#getting-started-first-application-run) | [Part 2](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/getting-started.html#getting-started-first-application-executable-jar)
+
+## 2. Working with Spring Boot
+
+Ready to actually start using Spring Boot? [We have you covered](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot):
+
+- **Build systems:** [Maven](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-maven) | [Gradle](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-gradle) | [Ant](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-ant) | [Starters](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-starter)
+- **Best practices:** [Code Structure](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-structuring-your-code) | [@Configuration](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-configuration-classes) | [@EnableAutoConfiguration](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-auto-configuration) | [Beans and Dependency Injection](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-spring-beans-and-dependency-injection)
+- **Running your code:** [IDE](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-running-from-an-ide) | [Packaged](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-running-as-a-packaged-application) | [Maven](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-running-with-the-maven-plugin) | [Gradle](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-running-with-the-gradle-plugin)
+- **Packaging your app:** [Production jars](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot-packaging-for-production)
+- **Spring Boot CLI:** [Using the CLI](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-cli.html#cli)
+
+## 3. Learning about Spring Boot Features
+
+Need more details about Spring Boot’s core features? [The following content is for you](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features):
+
+- **Core Features:** [SpringApplication](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-application) | [External Configuration](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-external-config) | [Profiles](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-profiles) | [Logging](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-logging)
+- **Web Applications:** [MVC](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc) | [Embedded Containers](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-embedded-container)
+- **Working with data:** [SQL](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-sql) | [NO-SQL](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-nosql)
+- **Messaging:** [Overview](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-messaging) | [JMS](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-jms)
+- **Testing:** [Overview](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-testing) | [Boot Applications](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-testing-spring-boot-applications) | [Utils](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-test-utilities)
+- **Extending:** [Auto-configuration](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-developing-auto-configuration) | [@Conditions](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/spring-boot-features.html#boot-features-condition-annotations)
+
+## 4. Moving to Production
+
+When you are ready to push your Spring Boot application to production, we have [some tricks](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/production-ready-features.html#production-ready) that you might like:
+
+- **Management endpoints:** [Overview](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/production-ready-features.html#production-ready-endpoints)
+- **Connection options:** [HTTP](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/production-ready-features.html#production-ready-monitoring) | [JMX](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/production-ready-features.html#production-ready-jmx)
+- **Monitoring:** [Metrics](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/production-ready-features.html#production-ready-metrics) | [Auditing](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/production-ready-features.html#production-ready-auditing) | [HTTP Tracing](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/production-ready-features.html#production-ready-http-tracing) | [Process](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/production-ready-features.html#production-ready-process-monitoring)
+
+## 5. Advanced Topics
+
+Finally, we have a few topics for more advanced users:
+
+- **Spring Boot Applications Deployment:** [Cloud Deployment](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/deployment.html#cloud-deployment) | [OS Service](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/deployment.html#deployment-service)
+- **Build tool plugins:** [Maven](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/build-tool-plugins.html#build-tool-plugins-maven-plugin) | [Gradle](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/build-tool-plugins.html#build-tool-plugins-gradle-plugin)
+- **Appendix:** [Application Properties](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/appendix-application-properties.html#common-application-properties) | [Configuration Metadata](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/appendix-configuration-metadata.html#configuration-metadata) | [Auto-configuration Classes](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/appendix-auto-configuration-classes.html#auto-configuration-classes) | [Test Auto-configuration Annotations](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/appendix-test-auto-configuration.html#test-auto-configuration) | [Executable Jars](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/appendix-executable-jar-format.html#executable-jar) | [Dependency Versions](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/appendix-dependency-versions.html#appendex-dependency-versions)

@@ -4,7 +4,6 @@
 
 The reference documentation consists of the following sections:
 
-- [Legal](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/legal.html#legal)  Legal information.                                           
 - [Documentation Overview](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/documentation-overview.html#boot-documentation)  About the Documentation, Getting Help, First Steps, and more. 
 - [Getting Started](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/getting-started.html#getting-started)  Introducing Spring Boot, System Requirements, Servlet Containers, Installing Spring Boot, Developing Your First Spring Boot Application 
 - [Using Spring Boot](https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/using-spring-boot.html#using-boot)  Build Systems, Structuring Your Code, Configuration, Spring Beans and Dependency Injection, and more. 

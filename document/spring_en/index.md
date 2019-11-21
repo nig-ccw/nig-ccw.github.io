@@ -2,18 +2,18 @@
 
 > Version 5.2.1.RELEASE
 
-- [Overview](Overview/Overview.md)	history, design philosophy, feedback, getting started.
+- [Overview](https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/overview.html#overview)	history, design philosophy, feedback, getting started.
 
-- [Core](Core/Core.md) 	IoC Container, Events, Resources, i18n, Validation, Data Binding, Type Conversion, SpEL, AOP.
+- [Core](https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/core.html#spring-core) 	IoC Container, Events, Resources, i18n, Validation, Data Binding, Type Conversion, SpEL, AOP.
 
-- [Testing](Testing/Testing.md) Mock Objects, TestContext Framework, Spring MVC Test, WebTestClient.
+- [Testing](https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/testing.html#testing) Mock Objects, TestContext Framework, Spring MVC Test, WebTestClient.
 
-- [Data Access](DataAccess/DataAccess.md) 	Transactions, DAO Support, JDBC, O/R Mapping, XML Marshalling.
+- [Data Access](https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/data-access.html#spring-data-tier) 	Transactions, DAO Support, JDBC, O/R Mapping, XML Marshalling.
 
-- [Web Servlet](WebMvc/WebMvc.md) 	Spring MVC, WebSocket, SockJS, STOMP Messaging.
+- [Web Servlet](https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/web.html#spring-web) 	Spring MVC, WebSocket, SockJS, STOMP Messaging.
 
-- [Web Reactive](WebFlux/WebFlux.md) 	Spring WebFlux, WebClient, WebSocket.
+- [Web Reactive](https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/web-reactive.html#spring-webflux) 	Spring WebFlux, WebClient, WebSocket.
 
-- [Integration](Integration/Integration.md) 	Remoting, JMS, JCA, JMX, Email, Tasks, Scheduling, Caching.
+- [Integration](https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/integration.html#spring-integration) 	Remoting, JMS, JCA, JMX, Email, Tasks, Scheduling, Caching.
 
-- [Languages](Languages/Languages.md) 	Kotlin, Groovy, Dynamic Languages.
+- [Languages](https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/languages.html#languages) 	Kotlin, Groovy, Dynamic Languages.

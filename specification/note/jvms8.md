@@ -1,5 +1,6 @@
 >参考：[JVM 规范系列@陈树义](https://www.cnblogs.com/chanshuyi/p/jvm_specification_00_guide.html)
 
+# Java 虚拟机规范（Java SE 8 版本） 
 ## 1.引言
 
 ### 历史
@@ -10,7 +11,7 @@
 
 ### JVM
 - JVM 是 Java 平台的基石。是实现硬件、操作系统的独立性，编译代码的小体积，以及保护用户免受恶意程序攻击的能力的关键部分。
-- JVM 是一种抽象的计算机器。它有自己的指令集以及各种运行时内存区域。
+- JVM 是一种抽象的计算机器。它有自己的指令集以及各种运行时内存区域。（**CPU、内存**）
 - JVM 对 Java 编程语言一无所知，只知道一种特定的二进制格式，即 Class 文件格式（包含 JVM 指令(或字节码)和一个符号表，以及其他辅助信息）。
 
 ### 提要
@@ -41,7 +42,7 @@
 - integral 类型：byte(8b)、short(18b)、int(32b)、long(64b)、char(16b)。
 - floating-point 类型：float(32b)、double(64b)。
 - boolean 类型：值为 true 或 false 。
-- returnAddress 类型：指向 JVM 指令的操作码的指针。
+- returnAddress 类型：指向 JVM 指令的操作码的指针。（与 Java 语言不对应，已名存实亡）
 
 ### 引用类型
 - 三种引用类型：Class 类型，数组类型，接口类型。

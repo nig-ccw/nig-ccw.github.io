@@ -494,3 +494,57 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 ## 具体类
 
+### AnnotationConfigServletWebServerApplicationContext
+
+- 定义
+
+```java
+public class AnnotationConfigServletWebServerApplicationContext extends ServletWebServerApplicationContext implements AnnotationConfigRegistry {
+	public AnnotationConfigServletWebServerApplicationContext() {
+		this.reader = new AnnotatedBeanDefinitionReader(this);
+		this.scanner = new ClassPathBeanDefinitionScanner(this);
+	}   
+}
+```
+
+```java
+public class ServletWebServerApplicationContext extends GenericWebApplicationContext
+      implements ConfigurableWebServerApplicationContext {
+      public ServletWebServerApplicationContext() {}
+}
+```
+
+```java
+public class GenericWebApplicationContext extends GenericApplicationContext
+      implements ConfigurableWebApplicationContext, ThemeSource {
+  public GenericWebApplicationContext() {
+		super();
+	}
+}      
+```
+
+```java
+public class GenericApplicationContext extends AbstractApplicationContext implements BeanDefinitionRegistry {
+  public GenericApplicationContext() {
+		this.beanFactory = new DefaultListableBeanFactory();
+	}
+}  
+```
+
+```java
+public abstract class AbstractApplicationContext extends DefaultResourceLoader
+      implements ConfigurableApplicationContext {
+  public AbstractApplicationContext() {
+		this.resourcePatternResolver = getResourcePatternResolver();
+	}    
+}
+```
+
+- 搜索
+
+
+
+
+
+
+

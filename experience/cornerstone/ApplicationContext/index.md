@@ -1,12 +1,14 @@
 # ApplicationContext
 
+![](./ApplicationContext.png)
+
 ## 总结
 
 - 继承 ListableBeanFactory、HierarchicalBeanFactory，暴露 AutowireCapableBeanFactory [参考 BeanFactory](../BeanFactory/BeanFactory.md)
-- 暴露 Environment [参考 Environment](../Environment/Environment.md)
+- 暴露 [Environment](../Environment/Environment.md)
 - 支持消息的参数化和国际化(MessageSource)
-- 支持事件发布功能(ApplicationEventPublisher) [参考 ApplicationEventPublisher](../ApplicationEventPublisher/ApplicationEventPublisher.md)
-- 支持根据 path-pattern 加载资源 [参考 Resource](../Resource/Resource.md)
+- 支持事件发布功能([ApplicationEventPublisher](../ApplicationEventPublisher/ApplicationEventPublisher.md))
+- 支持根据 path-pattern 加载 [Resource](../Resource/Resource.md)
 
 ## 接口定义
 
@@ -540,11 +542,16 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 }
 ```
 
-- 搜索
+## AnnotationConfigApplicationContext
 
-
-
-
+```java
+public class AnnotationConfigApplicationContext extends GenericApplicationContext implements AnnotationConfigRegistry {
+  public AnnotationConfigApplicationContext() {
+		this.reader = new AnnotatedBeanDefinitionReader(this);
+		this.scanner = new ClassPathBeanDefinitionScanner(this);
+	}
+}  
+```
 
 
 

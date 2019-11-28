@@ -1,5 +1,3 @@
->参考：[JVM 规范系列@陈树义](https://www.cnblogs.com/chanshuyi/p/jvm_specification_00_guide.html)
-
 # Java 虚拟机规范（Java SE 8 版本） 
 ## 1.引言
 

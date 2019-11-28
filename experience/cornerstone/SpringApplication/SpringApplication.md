@@ -45,22 +45,20 @@ public class SpringApplication {
         }
         listeners.started(context);
         callRunners(context, applicationArguments);
-      }
-      catch (Throwable ex) {
+      } catch (Throwable ex) {
         handleRunFailure(context, ex, exceptionReporters, listeners);
         throw new IllegalStateException(ex);
       }
-
+    
       try {
         listeners.running(context);
-      }
-      catch (Throwable ex) {
+      } catch (Throwable ex) {
         handleRunFailure(context, ex, exceptionReporters, null);
         throw new IllegalStateException(ex);
       }
       return context;
-    }
   }
+}
 ```
 
 ## run 方法详解
@@ -134,37 +132,39 @@ public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySourc
 ### ApplicationListener
 
 - spring-boot-2.2.1.RELEASE.jar!/META-INF/spring.factories
-  - ClearCachesApplicationListener - 7
+  - ClearCachesApplicationListener - 10
     - ContextRefreshedEvent
-  - ParentContextCloserApplicationListener - 6
+  - ParentContextCloserApplicationListener - 9
     - ParentContextAvailableEvent
-  - FileEncodingApplicationListener - 8
+  - FileEncodingApplicationListener - 11
     - ApplicationEnvironmentPreparedEvent
-  - AnsiOutputApplicationListener - 1
+  - AnsiOutputApplicationListener - 4
     - ApplicationEnvironmentPreparedEvent
-  - DelegatingApplicationListener - 5
+  - DelegatingApplicationListener - 8
     - ApplicationEnvironmentPreparedEvent
-  - ConfigFileApplicationListener - 0
+  - ConfigFileApplicationListener - 3
     - ApplicationEnvironmentPreparedEvent
     - ApplicationPreparedEvent
-  - ClasspathLoggingApplicationListener - 3
-  - LoggingApplicationListener - 2
+  - ClasspathLoggingApplicationListener - 6
+  - LoggingApplicationListener - 5
     - ApplicationStartingEvent
     - ApplicationEnvironmentPreparedEvent
     - ApplicationPreparedEvent
     - ContextClosedEvent
     - ApplicationFailedEvent
-  - LiquibaseServiceLocatorApplicationListener - 9
+  - LiquibaseServiceLocatorApplicationListener - 12
     - ApplicationStartingEvent
 - spring-boot-autoconfigure-2.2.1.RELEASE.jar!/META-INF/spring.factories
-  - BackgroundPreinitializer - 4
+  - BackgroundPreinitializer - 7
     - ApplicationReadyEvent
     - ApplicationFailedEvent
-- ServerPortInfoApplicationContextInitializer
+- ServerPortInfoApplicationContextInitializer 1
   - WebServerInitializedEvent
--  ConditionEvaluationReportLoggingListener.ConditionEvaluationReportListener
+-  ConditionEvaluationReportLoggingListener.ConditionEvaluationReportListener 2
   - ContextRefreshedEvent
   - ApplicationFailedEvent
+- RSocketPortInfoApplicationContextInitializer.Listener 0
+  - RSocketServerInitializedEvent
 
 ```java
 protected <T> T getProperty(String key, Class<T> targetValueType, boolean resolveNestedPlaceholders) {
@@ -242,7 +242,9 @@ private void doInvokeListener(ApplicationListener listener, ApplicationEvent eve
 
 ###ConfigurableApplicationContext
 
-```java
+####refresh
+
+```
 //SpringApplication
 private void refreshContext(ConfigurableApplicationContext context) {
    refresh(context);
@@ -300,3 +302,63 @@ public void refresh() throws BeansException, IllegalStateException {
 
 
 ```
+
+```java
+//SpringApplication
+private void refreshContext(ConfigurableApplicationContext context) {
+   refresh(context);
+   if (this.registerShutdownHook) {
+      try {
+         context.registerShutdownHook();
+      }
+      catch (AccessControlException ex) {
+         // Not allowed in some environments.
+      }
+   }
+}
+
+protected void refresh(ApplicationContext applicationContext) {
+  Assert.isInstanceOf(AbstractApplicationContext.class, applicationContext);
+  ((AbstractApplicationContext) applicationContext).refresh();
+}
+//ServletWebServerApplicationContext
+@Override
+public final void refresh() throws BeansException, IllegalStateException {
+  try {
+    super.refresh();
+  }
+  catch (RuntimeException ex) {
+    stopAndReleaseWebServer();
+    throw ex;
+  }
+}
+//AbstractApplicationContext
+@Override
+public void refresh() throws BeansException, IllegalStateException {
+  synchronized (this.startupShutdownMonitor) {
+    prepareRefresh();
+    ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+    prepareBeanFactory(beanFactory);
+    try {
+      postProcessBeanFactory(beanFactory);
+      invokeBeanFactoryPostProcessors(beanFactory);
+      registerBeanPostProcessors(beanFactory);
+      initMessageSource();
+      initApplicationEventMulticaster();
+      onRefresh();
+      registerListeners();
+      finishBeanFactoryInitialization(beanFactory);
+      finishRefresh();
+    }catch (BeansException ex) {
+      destroyBeans();
+      cancelRefresh(ex);
+      throw ex;
+    }finally {
+      resetCommonCaches();
+    }
+  }
+}
+```
+
+参考 [refresh](ConfigurableApplicationContext/refresh.md) 
+

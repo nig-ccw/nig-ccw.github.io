@@ -40,7 +40,7 @@ public interface ListableBeanFactory extends BeanFactory {
 ```java
 public interface HierarchicalBeanFactory extends BeanFactory {
   @Nullable BeanFactory getParentBeanFactory();
-	boolean containsLocalBean(String name);
+  boolean containsLocalBean(String name);
 }
 ```
 
@@ -60,7 +60,7 @@ public interface MessageSource {
 @FunctionalInterface
 public interface ApplicationEventPublisher {
    default void publishEvent(ApplicationEvent event) {
-      publishEvent((Object) event);
+      publishEvent((Object) event); 
    }
    void publishEvent(Object event);
 }
@@ -69,17 +69,17 @@ public interface ApplicationEventPublisher {
 - ResourcePatternResolver
 
 ```java
-public interface ResourcePatternResolver extends ResourceLoader {
-	String CLASSPATH_ALL_URL_PREFIX = "classpath*:";
-	Resource[] getResources(String locationPattern) throws IOException;
+public interface ResourcePatternResolver extends ResourceLoader { 
+  String CLASSPATH_ALL_URL_PREFIX = "classpath*:";
+  Resource[] getResources(String locationPattern) throws IOException;
 }
 ```
 
 ```java
 public interface ResourceLoader {
-	String CLASSPATH_URL_PREFIX = ResourceUtils.CLASSPATH_URL_PREFIX;//classpath:
-	Resource getResource(String location);
-	@Nullable ClassLoader getClassLoader();
+  String CLASSPATH_URL_PREFIX = ResourceUtils.CLASSPATH_URL_PREFIX;//classpath:
+  Resource getResource(String location);
+  @Nullable ClassLoader getClassLoader();
 }
 ```
 
@@ -87,7 +87,7 @@ public interface ResourceLoader {
 
 ```java
 public interface EnvironmentCapable {
-	Environment getEnvironment();
+  Environment getEnvironment();
 }
 ```
 
@@ -117,33 +117,33 @@ public interface EnvironmentCapable {
 
   - 为此上下文暴露 AutowireCapableBeanFactory 的功能
 
-  ```java
-  public interface AutowireCapableBeanFactory extends BeanFactory {
-    int AUTOWIRE_NO = 0;
-    int AUTOWIRE_BY_NAME = 1;
-    int AUTOWIRE_BY_TYPE = 2;
-    int AUTOWIRE_CONSTRUCTOR = 3;
-    @Deprecated int AUTOWIRE_AUTODETECT = 4;
-    String ORIGINAL_INSTANCE_SUFFIX = ".ORIGINAL";
-    <T> T createBean(Class<T> beanClass) throws BeansException;
-    void autowireBean(Object existingBean) throws BeansException;
-    Object configureBean(Object existingBean, String beanName) throws BeansException;
-    Object createBean(Class<?> beanClass, int autowireMode, boolean dependencyCheck) throws BeansException;
-    Object autowire(Class<?> beanClass, int autowireMode, boolean dependencyCheck) throws BeansException;
-    void autowireBeanProperties(Object existingBean, int autowireMode, boolean dependencyCheck) throws BeansException;
-    void applyBeanPropertyValues(Object existingBean, String beanName) throws BeansException;
-    Object initializeBean(Object existingBean, String beanName) throws BeansException;
-  	Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName) throws BeansException;
-    Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName)
-  throws BeansException;
-    void destroyBean(Object existingBean);
-    <T> NamedBeanHolder<T> resolveNamedBean(Class<T> requiredType) throws BeansException;
-    Object resolveBeanByName(String name, DependencyDescriptor descriptor) throws BeansException;
-    @Nullable Object resolveDependency(DependencyDescriptor descriptor, @Nullable String requestingBeanName) throws BeansException;
-    @Nullable
-  	Object resolveDependency(DependencyDescriptor descriptor, @Nullable String requestingBeanName, @Nullable Set<String> autowiredBeanNames, @Nullable TypeConverter typeConverter) throws BeansException;
-  }
-  ```
+```java
+public interface AutowireCapableBeanFactory extends BeanFactory {
+int AUTOWIRE_NO = 0;
+int AUTOWIRE_BY_NAME = 1;
+int AUTOWIRE_BY_TYPE = 2;
+int AUTOWIRE_CONSTRUCTOR = 3;
+@Deprecated int AUTOWIRE_AUTODETECT = 4;
+String ORIGINAL_INSTANCE_SUFFIX = ".ORIGINAL";
+<T> T createBean(Class<T> beanClass) throws BeansException;
+void autowireBean(Object existingBean) throws BeansException;
+Object configureBean(Object existingBean, String beanName) throws BeansException;
+Object createBean(Class<?> beanClass, int autowireMode, boolean dependencyCheck) throws BeansException;
+Object autowire(Class<?> beanClass, int autowireMode, boolean dependencyCheck) throws BeansException;
+void autowireBeanProperties(Object existingBean, int autowireMode, boolean dependencyCheck) throws BeansException;
+void applyBeanPropertyValues(Object existingBean, String beanName) throws BeansException;
+Object initializeBean(Object existingBean, String beanName) throws BeansException;
+Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName) throws BeansException;
+Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName)
+throws BeansException;
+void destroyBean(Object existingBean);
+<T> NamedBeanHolder<T> resolveNamedBean(Class<T> requiredType) throws BeansException;
+Object resolveBeanByName(String name, DependencyDescriptor descriptor) throws BeansException;
+@Nullable Object resolveDependency(DependencyDescriptor descriptor, @Nullable String requestingBeanName) throws BeansException;
+@Nullable
+Object resolveDependency(DependencyDescriptor descriptor, @Nullable String requestingBeanName, @Nullable Set<String> autowiredBeanNames, @Nullable TypeConverter typeConverter) throws BeansException;
+}
+```
 
 ## 子接口
 

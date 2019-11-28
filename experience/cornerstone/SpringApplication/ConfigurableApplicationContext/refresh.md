@@ -4,12 +4,12 @@
 //AbstractApplicationContext#refresh
 public void refresh() throws BeansException, IllegalStateException {
  synchronized (this.startupShutdownMonitor) {
-  //A
+  //无异常区
   prepareRefresh();//准备刷新
   ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();//获取新的 Bean 工厂
   prepareBeanFactory(beanFactory);//准备 Bean 工厂
   try {
-   //B
+   //异常捕获区
    postProcessBeanFactory(beanFactory);//后置处理 Bean 工厂
    invokeBeanFactoryPostProcessors(beanFactory);//调用 Bean 工厂后置处理器
    registerBeanPostProcessors(beanFactory);//注册 Bean 后置处理器
@@ -20,19 +20,19 @@ public void refresh() throws BeansException, IllegalStateException {
    finishBeanFactoryInitialization(beanFactory);//完成 Bean 工厂实例化
    finishRefresh();//完成刷新
   } catch (BeansException ex) {
-   //C
+   //异常处理区
    destroyBeans();//销毁 Bean
    cancelRefresh(ex);//取消刷新
    throw ex;
   } finally {
-   //D
+   //最终执行区
    resetCommonCaches();//重置常用缓存
   }
  }
 }
 ```
 
-## A 无异常区
+## 无异常区
 
 ### prepareRefresh
 
@@ -184,7 +184,7 @@ protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
 
 > 参考 [DefaultListableBeanFactory](../../BeanFactory/DefaultListableBeanFactory.md) 的相应方法实现
 
-## B 异常捕获区
+## 异常捕获区
 
 ### postProcessBeanFactory
 
@@ -653,7 +653,7 @@ static void registerApplicationContext(ConfigurableApplicationContext applicatio
 }
 ```
 
-## C 异常处理区
+## 异常处理区
 
 ### destroyBeans
 
@@ -679,7 +679,7 @@ protected void cancelRefresh(BeansException ex) {
 }
 ```
 
-## D 最终执行区
+## 最终执行区
 
 ###resetCommonCaches
 

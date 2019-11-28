@@ -75,7 +75,7 @@ public class SpringApplication {
 | contextLoaded(context)      | multicastEvent       | ApplicationPreparedEvent      |
 | started(context)         | publishEvent        | ApplicationStartedEvent       |
 | running(context)         | publishEvent        | ApplicationReadyEvent        |
-| failed(context,Throwable)    | publishEvent multicastEvent | ApplicationFailedEvent       |
+| failed(context,Throwable)    | publishEvent 或 multicastEvent | ApplicationFailedEvent       |
 
 ```java
 public class EventPublishingRunListener implements SpringApplicationRunListener, Ordered {

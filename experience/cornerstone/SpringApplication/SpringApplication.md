@@ -61,10 +61,8 @@ public class SpringApplication {
 
 ## run 方法详解
 
-### EventPublishingRunListener
-
-- SpringApplicationRunListener 唯一实现类 EventPublishingRunListener
-- 调用 SimpleApplicationEventMulticaster#multicastEvent 或 ConfigurableApplicationContext#publishEvent 发布事件
+### SpringApplicationRunListener
+- 调用 SimpleApplicationEventMulticaster#multicastEvent 发布事件
 
 | Spring应用启动监听器       | 发布方式          | Spring应用事件类型         |
 | -------------------------------- | --------------------------- | ----------------------------------- |
@@ -75,6 +73,88 @@ public class SpringApplication {
 | started(context)         | publishEvent        | ApplicationStartedEvent       |
 | running(context)         | publishEvent        | ApplicationReadyEvent        |
 | failed(context,Throwable)    | publishEvent multicastEvent | ApplicationFailedEvent       |
+
+```java
+//EventPublishingRunListener 是 SpringApplicationRunListener 的唯一实现
+public class EventPublishingRunListener implements SpringApplicationRunListener, Ordered {
+ private final SpringApplication application;
+ private final String[] args;
+ private final SimpleApplicationEventMulticaster initialMulticaster;
+ public EventPublishingRunListener(SpringApplication application, String[] args) {
+  this.application = application;
+  this.args = args;
+  this.initialMulticaster = new SimpleApplicationEventMulticaster();
+  for (ApplicationListener<?> listener : application.getListeners()) {
+   this.initialMulticaster.addApplicationListener(listener);
+  }
+ }
+
+ @Override
+ public int getOrder() {
+  return 0;
+ }
+
+ @Override
+ public void starting() {
+  this.initialMulticaster.multicastEvent(new ApplicationStartingEvent(this.application, this.args));
+ }
+
+ @Override
+ public void environmentPrepared(ConfigurableEnvironment environment) {
+  this.initialMulticaster.multicastEvent(new ApplicationEnvironmentPreparedEvent(this.application, this.args, environment));
+ }
+
+ @Override
+ public void contextPrepared(ConfigurableApplicationContext context) {
+  this.initialMulticaster.multicastEvent(new ApplicationContextInitializedEvent(this.application, this.args, context));
+ }
+
+ @Override
+ public void contextLoaded(ConfigurableApplicationContext context) {
+  for (ApplicationListener<?> listener : this.application.getListeners()) {
+   if (listener instanceof ApplicationContextAware) {
+    ((ApplicationContextAware) listener).setApplicationContext(context);
+   }
+   context.addApplicationListener(listener);
+  }
+  this.initialMulticaster.multicastEvent(new ApplicationPreparedEvent(this.application, this.args, context));
+ }
+
+ @Override
+ public void started(ConfigurableApplicationContext context) {
+  context.publishEvent(new ApplicationStartedEvent(this.application, this.args, context));
+ }
+
+ @Override
+ public void running(ConfigurableApplicationContext context) {
+  context.publishEvent(new ApplicationReadyEvent(this.application, this.args, context));
+ }
+
+ @Override
+ public void failed(ConfigurableApplicationContext context, Throwable exception) {
+  ApplicationFailedEvent event = new ApplicationFailedEvent(this.application, this.args, context, exception);
+  if (context != null && context.isActive()) {
+   context.publishEvent(event);
+  }else {
+   if (context instanceof AbstractApplicationContext) {
+    for (ApplicationListener<?> listener : ((AbstractApplicationContext) context).getApplicationListeners()) {
+     this.initialMulticaster.addApplicationListener(listener);
+    }
+   }
+   this.initialMulticaster.setErrorHandler(new LoggingErrorHandler());
+   this.initialMulticaster.multicastEvent(event);
+  }
+ }
+
+ private static class LoggingErrorHandler implements ErrorHandler {
+  private static final Log logger = LogFactory.getLog(EventPublishingRunListener.class);
+  @Override
+  public void handleError(Throwable throwable) {
+   logger.warn("Error calling ApplicationEventListener", throwable);
+  }
+ }
+}
+```
 
 ### ConfigurableEnvironment
 

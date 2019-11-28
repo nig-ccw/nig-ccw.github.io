@@ -233,7 +233,7 @@ private void doInvokeListener(ApplicationListener listener, ApplicationEvent eve
 
 #### refresh
 
-```
+```java
 //SpringApplication
 private void refreshContext(ConfigurableApplicationContext context) {
   refresh(context);

@@ -184,9 +184,9 @@ protected <T> T getProperty(String key, Class<T> targetValueType, boolean resolv
 }
 ```
 
-> ```properties
-> AbstractEnvironment#getProperty 调用 PropertySourcesPropertyResolver#getProperty
-> ```
+```properties
+AbstractEnvironment#getProperty 调用 PropertySourcesPropertyResolver#getProperty
+```
 
 ```java
 //EventPublishingRunListener 通过 SimpleApplicationEventMulticaster#multicastEvent 发布事件
@@ -229,9 +229,9 @@ private void doInvokeListener(ApplicationListener listener, ApplicationEvent eve
 
 参考 [ConfigFileApplicationListener](ApplicationListener/ConfigFileApplicationListener.md)
 
-###ConfigurableApplicationContext
+### ConfigurableApplicationContext
 
-####refresh
+#### refresh
 
 ```
 //SpringApplication

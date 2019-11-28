@@ -4,7 +4,7 @@
 
 ## 总结
 
-- 继承 ListableBeanFactory、HierarchicalBeanFactory，暴露 AutowireCapableBeanFactory [参考 BeanFactory](../BeanFactory/BeanFactory.md)
+- <font color=red>继承</font> ListableBeanFactory、HierarchicalBeanFactory，暴露 AutowireCapableBeanFactory [参考 BeanFactory](../BeanFactory/BeanFactory.md)
 - 暴露 [Environment](../Environment/Environment.md)
 - 支持消息的参数化和国际化(MessageSource)
 - 支持事件发布功能([ApplicationEventPublisher](../ApplicationEventPublisher/ApplicationEventPublisher.md))

@@ -94,27 +94,16 @@ public interface EnvironmentCapable {
 ## 方法
 
 - @Nullable String getId();
-
   - 返回此应用上下文的唯一ID，可null
-
 - String getApplicationName();
-
   - 返回此上下文所属的已部署的应用程序的名称
-
 - String getDisplayName();
-
   - 为这个上下文返回一个友好的名称
-
 - long getStartupDate();
-
   - 返回第一次加载该上下文时的时间戳
-
 - @Nullable ApplicationContext getParent();
-
   - 返回父级上下文，可null
-
 - AutowireCapableBeanFactory getAutowireCapableBeanFactory() throws IllegalStateException;
-
   - 为此上下文暴露 AutowireCapableBeanFactory 的功能
 
 ```java

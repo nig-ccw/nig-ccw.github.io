@@ -97,14 +97,14 @@ private ConfigurableEnvironment prepareEnvironment(SpringApplicationRunListeners
 ### ApplicationContextInitializer
 
 - spring-boot-2.2.1.RELEASE.jar!/META-INF/spring.factories
- - ConfigurationWarningsApplicationContextInitializer - 3
- - ContextIdApplicationContextInitializer - 2
- - DelegatingApplicationContextInitializer - 0
- - RSocketPortInfoApplicationContextInitializer - 4
- - ServerPortInfoApplicationContextInitializer- 5
+    - ConfigurationWarningsApplicationContextInitializer - 3
+    - ContextIdApplicationContextInitializer - 2
+    - DelegatingApplicationContextInitializer - 0
+    - RSocketPortInfoApplicationContextInitializer - 4
+    - ServerPortInfoApplicationContextInitializer- 5
 - spring-boot-autoconfigure-2.2.1.RELEASE.jar!/META-INF/spring.factories
- - SharedMetadataReaderFactoryContextInitializer- 1
- - ConditionEvaluationReportLoggingListener - 6
+    - SharedMetadataReaderFactoryContextInitializer- 1
+    - ConditionEvaluationReportLoggingListener - 6
 
 ```java
 private void prepareContext(ConfigurableApplicationContext context, ConfigurableEnvironment environment,SpringApplicationRunListeners listeners, ApplicationArguments applicationArguments, Banner printedBanner) {
@@ -126,39 +126,39 @@ public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySourc
 ### ApplicationListener
 
 - spring-boot-2.2.1.RELEASE.jar!/META-INF/spring.factories
- - ClearCachesApplicationListener - 10
-  - ContextRefreshedEvent
- - ParentContextCloserApplicationListener - 9
-  - ParentContextAvailableEvent
- - FileEncodingApplicationListener - 11
-  - ApplicationEnvironmentPreparedEvent
- - AnsiOutputApplicationListener - 4
-  - ApplicationEnvironmentPreparedEvent
- - DelegatingApplicationListener - 8
-  - ApplicationEnvironmentPreparedEvent
- - ConfigFileApplicationListener - 3
-  - ApplicationEnvironmentPreparedEvent
-  - ApplicationPreparedEvent
- - ClasspathLoggingApplicationListener - 6
- - LoggingApplicationListener - 5
-  - ApplicationStartingEvent
-  - ApplicationEnvironmentPreparedEvent
-  - ApplicationPreparedEvent
-  - ContextClosedEvent
-  - ApplicationFailedEvent
- - LiquibaseServiceLocatorApplicationListener - 12
-  - ApplicationStartingEvent
+  - ClearCachesApplicationListener - 10
+    - ContextRefreshedEvent
+  - ParentContextCloserApplicationListener - 9
+    - ParentContextAvailableEvent
+  - FileEncodingApplicationListener - 11
+    - ApplicationEnvironmentPreparedEvent
+  - AnsiOutputApplicationListener - 4
+    - ApplicationEnvironmentPreparedEvent
+  - DelegatingApplicationListener - 8
+    - ApplicationEnvironmentPreparedEvent
+  - ConfigFileApplicationListener - 3
+    - ApplicationEnvironmentPreparedEvent
+    - ApplicationPreparedEvent
+  - ClasspathLoggingApplicationListener - 6
+  - LoggingApplicationListener - 5
+    - ApplicationStartingEvent
+    - ApplicationEnvironmentPreparedEvent
+    - ApplicationPreparedEvent
+    - ContextClosedEvent
+    - ApplicationFailedEvent
+  - LiquibaseServiceLocatorApplicationListener - 12
+    - ApplicationStartingEvent
 - spring-boot-autoconfigure-2.2.1.RELEASE.jar!/META-INF/spring.factories
- - BackgroundPreinitializer - 7
-  - ApplicationReadyEvent
-  - ApplicationFailedEvent
+  - BackgroundPreinitializer - 7
+    - ApplicationReadyEvent
+    - ApplicationFailedEvent
 - ServerPortInfoApplicationContextInitializer 1
- - WebServerInitializedEvent
+  - WebServerInitializedEvent
 - ConditionEvaluationReportLoggingListener.ConditionEvaluationReportListener 2
- - ContextRefreshedEvent
- - ApplicationFailedEvent
+  - ContextRefreshedEvent
+  - ApplicationFailedEvent
 - RSocketPortInfoApplicationContextInitializer.Listener 0
- - RSocketServerInitializedEvent
+  - RSocketServerInitializedEvent
 
 ```java
 protected <T> T getProperty(String key, Class<T> targetValueType, boolean resolveNestedPlaceholders) {

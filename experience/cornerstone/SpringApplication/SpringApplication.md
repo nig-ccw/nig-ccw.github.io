@@ -5,12 +5,12 @@
 ```java
 public class SpringApplication {
  public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources) {
-  this.resourceLoader = resourceLoader;
-  this.primarySources = new LinkedHashSet<>(Arrays.asList(primarySources));
-  this.webApplicationType = WebApplicationType.deduceFromClasspath();
-  setInitializers((Collection)getSpringFactoriesInstances(ApplicationContextInitializer.class));
-  setListeners((Collection)getSpringFactoriesInstances(ApplicationListener.class));
-  this.mainApplicationClass = deduceMainApplicationClass();
+  this.resourceLoader = resourceLoader;//可自定义
+  this.primarySources = new LinkedHashSet<>(Arrays.asList(primarySources));//可自定义
+  this.webApplicationType = WebApplicationType.deduceFromClasspath();//可先指定
+  setInitializers((Collection)getSpringFactoriesInstances(ApplicationContextInitializer.class));//可通过 spring.factories 文件 ApplicationContextInitializer 指定
+  setListeners((Collection)getSpringFactoriesInstances(ApplicationListener.class));//可通过 spring.factories 文件 ApplicationListener 指定
+  this.mainApplicationClass = deduceMainApplicationClass();//可先指定
  }
 }
 ```
@@ -22,36 +22,35 @@ public class SpringApplication {
  public ConfigurableApplicationContext run(String... args) {
    StopWatch stopWatch = new StopWatch();
    stopWatch.start();
-   ConfigurableApplicationContext context = null;
-   Collection<SpringBootExceptionReporter> exceptionReporters = new ArrayList<>();
-   configureHeadlessProperty();
-   SpringApplicationRunListeners listeners = getRunListeners(args);
-   listeners.starting();
+   ConfigurableApplicationContext context = null;//可配置应用上下文
+   Collection<SpringBootExceptionReporter> exceptionReporters = new ArrayList<>();//Spring Boot 异常报告器
+   configureHeadlessProperty();//配置 Headless 属性
+   SpringApplicationRunListeners listeners = getRunListeners(args);//Spring 应用运行监听器（实例化）
+   listeners.starting();//正在启动
    try {
-    ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
-    ConfigurableEnvironment environment = prepareEnvironment(listeners, applicationArguments);
-    configureIgnoreBeanInfo(environment);
-    Banner printedBanner = printBanner(environment);
-    context = createApplicationContext();
-    exceptionReporters = getSpringFactoriesInstances(SpringBootExceptionReporter.class, new Class[] { ConfigurableApplicationContext.class }, context);
-    prepareContext(context, environment, listeners, applicationArguments, printedBanner);
-    refreshContext(context);
-    afterRefresh(context, applicationArguments);
+    ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);//应用参数
+    ConfigurableEnvironment environment = prepareEnvironment(listeners, applicationArguments);//可配置环境
+    configureIgnoreBeanInfo(environment);//配置忽略 Bean 信息
+    Banner printedBanner = printBanner(environment);//打印横幅
+    context = createApplicationContext();//创建应用上下文
+    exceptionReporters = getSpringFactoriesInstances(SpringBootExceptionReporter.class, new Class[] { ConfigurableApplicationContext.class }, context);//实例化 Spring Boot 异常报告器
+    prepareContext(context, environment, listeners, applicationArguments, printedBanner);//准备应用上下文
+    refreshContext(context);//刷新应用上下文
+    afterRefresh(context, applicationArguments);//刷新应用上下文之后的处理
     stopWatch.stop();
     if (this.logStartupInfo) {
      new StartupInfoLogger(this.mainApplicationClass).logStarted(getApplicationLog(), stopWatch);
     }
-    listeners.started(context);
-    callRunners(context, applicationArguments);
+    listeners.started(context);//已启动
+    callRunners(context, applicationArguments);//调用应用运行器
    } catch (Throwable ex) {
-    handleRunFailure(context, ex, exceptionReporters, listeners);
+    handleRunFailure(context, ex, exceptionReporters, listeners);//处理运行失败
     throw new IllegalStateException(ex);
    }
-  
    try {
-    listeners.running(context);
+    listeners.running(context);//正在运行
    } catch (Throwable ex) {
-    handleRunFailure(context, ex, exceptionReporters, null);
+    handleRunFailure(context, ex, exceptionReporters, null);//处理运行失败，没监听器
     throw new IllegalStateException(ex);
    }
    return context;
@@ -62,7 +61,11 @@ public class SpringApplication {
 ## run 方法详解
 
 ### SpringApplicationRunListener
-- 调用 SimpleApplicationEventMulticaster#multicastEvent 发布事件
+
+- Spring 应用运行监听器 - 在 run 方法被调用
+- EventPublishingRunListener 是 SpringApplicationRunListener 的唯一实现类
+
+- 之后调用 SimpleApplicationEventMulticaster#multicastEvent 发布事件
 
 | Spring应用启动监听器       | 发布方式          | Spring应用事件类型         |
 | -------------------------------- | --------------------------- | ----------------------------------- |
@@ -75,7 +78,6 @@ public class SpringApplication {
 | failed(context,Throwable)    | publishEvent multicastEvent | ApplicationFailedEvent       |
 
 ```java
-//EventPublishingRunListener 是 SpringApplicationRunListener 的唯一实现
 public class EventPublishingRunListener implements SpringApplicationRunListener, Ordered {
  private final SpringApplication application;
  private final String[] args;
@@ -164,7 +166,7 @@ private ConfigurableEnvironment prepareEnvironment(SpringApplicationRunListeners
   ConfigurableEnvironment environment = getOrCreateEnvironment();
   configureEnvironment(environment, applicationArguments.getSourceArgs());
   ConfigurationPropertySources.attach(environment);
-  listeners.environmentPrepared(environment);
+  listeners.environmentPrepared(environment);//环境已准备
   bindToSpringApplication(environment);
   if (!this.isCustomEnvironment) {
    environment = new EnvironmentConverter(getClassLoader()).convertEnvironmentIfNecessary(environment, deduceEnvironmentClass());
@@ -176,28 +178,27 @@ private ConfigurableEnvironment prepareEnvironment(SpringApplicationRunListeners
 
 ### ApplicationContextInitializer
 
-- spring-boot-2.2.1.RELEASE.jar!/META-INF/spring.factories
-    - ConfigurationWarningsApplicationContextInitializer - 3
-    - ContextIdApplicationContextInitializer - 2
-    - DelegatingApplicationContextInitializer - 0
-    - RSocketPortInfoApplicationContextInitializer - 4
-    - ServerPortInfoApplicationContextInitializer- 5
-- spring-boot-autoconfigure-2.2.1.RELEASE.jar!/META-INF/spring.factories
-    - SharedMetadataReaderFactoryContextInitializer- 1
-    - ConditionEvaluationReportLoggingListener - 6
+- DelegatingApplicationContextInitializer
+- SharedMetadataReaderFactoryContextInitializer
+- ContextIdApplicationContextInitializer
+- ConfigurationWarningsApplicationContextInitializer 
+- RSocketPortInfoApplicationContextInitializer 
+- ServerPortInfoApplicationContextInitializer 
+- ConditionEvaluationReportLoggingListener
 
 ```java
+//SpringApplication
 private void prepareContext(ConfigurableApplicationContext context, ConfigurableEnvironment environment,SpringApplicationRunListeners listeners, ApplicationArguments applicationArguments, Banner printedBanner) {
- applyInitializers(context);
+ applyInitializers(context);//在此次被应用
 }
-
+//主要是调用所有应用上下文初始化器的 initialize 方法
 protected void applyInitializers(ConfigurableApplicationContext context) {
  for (ApplicationContextInitializer initializer : getInitializers()) {
   Class<?> requiredType = GenericTypeResolver.resolveTypeArgument(initializer.getClass(), ApplicationContextInitializer.class);
   initializer.initialize(context);
  }
 }
-
+//设置应用上下文初始化器的值
 public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources) {
  setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));
 }
@@ -205,71 +206,25 @@ public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySourc
 
 ### ApplicationListener
 
-- spring-boot-2.2.1.RELEASE.jar!/META-INF/spring.factories
-  - ClearCachesApplicationListener - 10
-    - ContextRefreshedEvent
-  - ParentContextCloserApplicationListener - 9
-    - ParentContextAvailableEvent
-  - FileEncodingApplicationListener - 11
-    - ApplicationEnvironmentPreparedEvent
-  - AnsiOutputApplicationListener - 4
-    - ApplicationEnvironmentPreparedEvent
-  - DelegatingApplicationListener - 8
-    - ApplicationEnvironmentPreparedEvent
-  - ConfigFileApplicationListener - 3
-    - ApplicationEnvironmentPreparedEvent
-    - ApplicationPreparedEvent
-  - ClasspathLoggingApplicationListener - 6
-  - LoggingApplicationListener - 5
-    - ApplicationStartingEvent
-    - ApplicationEnvironmentPreparedEvent
-    - ApplicationPreparedEvent
-    - ContextClosedEvent
-    - ApplicationFailedEvent
-  - LiquibaseServiceLocatorApplicationListener - 12
-    - ApplicationStartingEvent
-- spring-boot-autoconfigure-2.2.1.RELEASE.jar!/META-INF/spring.factories
-  - BackgroundPreinitializer - 7
-    - ApplicationReadyEvent
-    - ApplicationFailedEvent
-- ServerPortInfoApplicationContextInitializer 1
-  - WebServerInitializedEvent
-- ConditionEvaluationReportLoggingListener.ConditionEvaluationReportListener 2
-  - ContextRefreshedEvent
-  - ApplicationFailedEvent
-- RSocketPortInfoApplicationContextInitializer.Listener 0
-  - RSocketServerInitializedEvent
+- RSocketPortInfoApplicationContextInitializer.Listener 监听 RSocketServerInitializedEvent
+- ServerPortInfoApplicationContextInitializer 监听 WebServerInitializedEvent
+- ConditionEvaluationReportLoggingListener.ConditionEvaluationReportListener 监听 ContextRefreshedEvent、ApplicationFailedEvent
+- ConfigFileApplicationListener 监听 ApplicationEnvironmentPreparedEvent、ApplicationPreparedEvent
+- AnsiOutputApplicationListener 监听 ApplicationEnvironmentPreparedEvent
+- LoggingApplicationListener 监听 ApplicationStartingEvent、ApplicationEnvironmentPreparedEvent、ApplicationPreparedEvent、ContextClosedEvent、ApplicationFailedEvent
+- ClasspathLoggingApplicationListener 监听 ApplicationEnvironmentPreparedEvent、ApplicationFailedEvent
+- BackgroundPreinitializer 监听 ApplicationReadyEvent、ApplicationFailedEvent
+- DelegatingApplicationListener 监听 ApplicationEnvironmentPreparedEvent
+- ParentContextCloserApplicationListener 监听 ParentContextAvailableEvent
+- ClearCachesApplicationListener 监听 ContextRefreshedEvent
+- FileEncodingApplicationListener 监听 ApplicationEnvironmentPreparedEvent
+- LiquibaseServiceLocatorApplicationListener 监听 ApplicationStartingEvent
+
+> 相应的应用监听器（ApplicationListener）只关注感兴趣的应用事件（ApplicationEvent）
 
 ```java
-protected <T> T getProperty(String key, Class<T> targetValueType, boolean resolveNestedPlaceholders) {
-  if (this.propertySources != null) {
-   for (PropertySource<?> propertySource : this.propertySources) {
-     if (logger.isTraceEnabled()) {
-      logger.trace("Searching for key '" + key + "' in PropertySource '" + propertySource.getName() + "'");
-     }
-     Object value = propertySource.getProperty(key);
-     if (value != null) {
-      if (resolveNestedPlaceholders && value instanceof String) {
-        value = resolveNestedPlaceholders((String) value);
-      }
-      logKeyFound(key, propertySource, value);
-      return convertValueIfNecessary(value, targetValueType);
-     }
-   }
-  }
-  if (logger.isTraceEnabled()) {
-   logger.trace("Could not find key '" + key + "' in any property source");
-  }
-  return null;
-}
-```
-
-```properties
-AbstractEnvironment#getProperty 调用 PropertySourcesPropertyResolver#getProperty
-```
-
-```java
-//EventPublishingRunListener 通过 SimpleApplicationEventMulticaster#multicastEvent 发布事件
+//已知 EventPublishingRunListener 调用 SimpleApplicationEventMulticaster#multicastEvent
+//SimpleApplicationEventMulticaster
 @Override
 public void multicastEvent(ApplicationEvent event) {
   multicastEvent(event, resolveDefaultEventType(event));//1
@@ -288,7 +243,7 @@ public void multicastEvent(final ApplicationEvent event, @Nullable ResolvableTyp
 }
 protected void invokeListener(ApplicationListener<?> listener, ApplicationEvent event) {
  ErrorHandler errorHandler = getErrorHandler();
- if (errorHandler != null) {//null
+ if (errorHandler != null) {
   try {
    doInvokeListener(listener, event);
   } catch (Throwable err) {
@@ -300,7 +255,7 @@ protected void invokeListener(ApplicationListener<?> listener, ApplicationEvent 
 }
 private void doInvokeListener(ApplicationListener listener, ApplicationEvent event) {
  try {
-  listener.onApplicationEvent(event);//4
+  listener.onApplicationEvent(event);//4 这里说明了发布事件后会调用 ApplicationListener#onApplicationEvent
  } catch (ClassCastException ex) {
   //...
  }
@@ -321,7 +276,6 @@ private void refreshContext(ConfigurableApplicationContext context) {
    try {
      context.registerShutdownHook();
    } catch (AccessControlException ex) {
-     // Not allowed in some environments.
    }
   }
 }

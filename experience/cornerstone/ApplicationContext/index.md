@@ -60,7 +60,7 @@ public interface MessageSource {
 @FunctionalInterface
 public interface ApplicationEventPublisher {
  default void publishEvent(ApplicationEvent event) {
-   publishEvent((Object) event); 
+  publishEvent((Object) event); 
  }
  void publishEvent(Object event);
 }
@@ -123,14 +123,12 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
  void applyBeanPropertyValues(Object existingBean, String beanName) throws BeansException;
  Object initializeBean(Object existingBean, String beanName) throws BeansException;
  Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName) throws BeansException;
- Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName)
- throws BeansException;
+ Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName) throws BeansException;
  void destroyBean(Object existingBean);
  <T> NamedBeanHolder<T> resolveNamedBean(Class<T> requiredType) throws BeansException;
  Object resolveBeanByName(String name, DependencyDescriptor descriptor) throws BeansException;
  @Nullable Object resolveDependency(DependencyDescriptor descriptor, @Nullable String requestingBeanName) throws BeansException;
- @Nullable
- Object resolveDependency(DependencyDescriptor descriptor, @Nullable String requestingBeanName, @Nullable Set<String> autowiredBeanNames, @Nullable TypeConverter typeConverter) throws BeansException;
+ @Nullable Object resolveDependency(DependencyDescriptor descriptor, @Nullable String requestingBeanName, @Nullable Set<String> autowiredBeanNames, @Nullable TypeConverter typeConverter) throws BeansException;
 }
 ```
 

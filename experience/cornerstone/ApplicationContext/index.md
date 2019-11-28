@@ -353,8 +353,6 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
 
 ### AnnotationConfigServletWebServerApplicationContext
 
-- 定义
-
 ```java
 public class AnnotationConfigServletWebServerApplicationContext extends ServletWebServerApplicationContext implements AnnotationConfigRegistry {
  public AnnotationConfigServletWebServerApplicationContext() {

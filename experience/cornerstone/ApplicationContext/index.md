@@ -378,15 +378,13 @@ public class AnnotationConfigServletWebServerApplicationContext extends ServletW
 ```
 
 ```java
-public class ServletWebServerApplicationContext extends GenericWebApplicationContext
-      implements ConfigurableWebServerApplicationContext {
-      public ServletWebServerApplicationContext() {}
+public class ServletWebServerApplicationContext extends GenericWebApplicationContext implements ConfigurableWebServerApplicationContext {
+ public ServletWebServerApplicationContext() {}
 }
 ```
 
 ```java
-public class GenericWebApplicationContext extends GenericApplicationContext
-      implements ConfigurableWebApplicationContext, ThemeSource {
+public class GenericWebApplicationContext extends GenericApplicationContext implements ConfigurableWebApplicationContext, ThemeSource {
   public GenericWebApplicationContext() {
   super();
  }
@@ -402,8 +400,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 ```
 
 ```java
-public abstract class AbstractApplicationContext extends DefaultResourceLoader
-      implements ConfigurableApplicationContext {
+public abstract class AbstractApplicationContext extends DefaultResourceLoader implements ConfigurableApplicationContext {
   public AbstractApplicationContext() {
   this.resourcePatternResolver = getResourcePatternResolver();
  }    

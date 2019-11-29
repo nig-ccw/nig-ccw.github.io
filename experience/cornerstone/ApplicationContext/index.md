@@ -392,7 +392,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
 }
 ```
 
-## AnnotationConfigApplicationContext
+### AnnotationConfigApplicationContext
 
 ```java
 public class AnnotationConfigApplicationContext extends GenericApplicationContext implements AnnotationConfigRegistry {

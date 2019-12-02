@@ -137,8 +137,7 @@ public interface SingletonBeanRegistry {
 
 ```java
 public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport implements ConfigurableBeanFactory {
- protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredType,
-			@Nullable final Object[] args, boolean typeCheckOnly) throws BeansException {
+ protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredType, @Nullable final Object[] args, boolean typeCheckOnly) throws BeansException {
   final String beanName = transformedBeanName(name);
   Object bean;
   //先查单例缓存
@@ -149,7 +148,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
    if (isPrototypeCurrentlyInCreation(beanName)) {//循环引用抛异常
     throw new BeanCurrentlyInCreationException(beanName);
    }
-	 //父级BeanFactory存在，当前BeanFactory不包含BeanDefinition，交由父级BeanFactory处理
+   //父级BeanFactory存在，当前BeanFactory不包含BeanDefinition，交由父级BeanFactory处理
    BeanFactory parentBeanFactory = getParentBeanFactory();
    if (parentBeanFactory != null && !containsBeanDefinition(beanName)) {
     String nameToLookup = originalBeanName(name);
@@ -157,49 +156,49 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
      return ((AbstractBeanFactory) parentBeanFactory).doGetBean(nameToLookup, requiredType, args, typeCheckOnly);
     }else if (args != null) {
      return (T) parentBeanFactory.getBean(nameToLookup, args);
-		}else if (requiredType != null) {
-		 return parentBeanFactory.getBean(nameToLookup, requiredType);
-		}else {
-		 return (T) parentBeanFactory.getBean(nameToLookup);
-		}
-	 }
+	}else if (requiredType != null) {
+	 return parentBeanFactory.getBean(nameToLookup, requiredType);
+    }else {
+	 return (T) parentBeanFactory.getBean(nameToLookup);
+	}
+   }
    if (!typeCheckOnly) {
-		markBeanAsCreated(beanName);
-	 }
+    markBeanAsCreated(beanName);
+   }
    try {
     //多级存在，将BeanDefinition合并
-	  final RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
-		checkMergedBeanDefinition(mbd, beanName, args);
+	final RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
+	checkMergedBeanDefinition(mbd, beanName, args);
     //先处理依赖
     String[] dependsOn = mbd.getDependsOn();
     if (dependsOn != null) {
      for (String dep : dependsOn) {
-		  if (isDependent(beanName, dep)) {
-        //循环依赖抛异常
-			}
+	  if (isDependent(beanName, dep)) {
+       //循环依赖抛异常
+	  }
       registerDependentBean(dep, beanName);
-			try {
-			 getBean(dep);
-			}catch (NoSuchBeanDefinitionException ex) {
-			}
-		 }
-		}
+	  try {
+       getBean(dep);
+	  }catch (NoSuchBeanDefinitionException ex) {
+	  }
+     }
+    }
     if (mbd.isSingleton()) {//单例Bean实例化
      sharedInstance = getSingleton(beanName, () -> {
-		  try {
-			 return createBean(beanName, mbd, args);//1
-		  }catch (BeansException ex) {
-			 destroySingleton(beanName);
-			 throw ex;
-		  }
-		 });
-		 bean = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);
-		}else if (mbd.isPrototype()) {//原型Bean实例化
+      try {
+        return createBean(beanName, mbd, args);//1
+      }catch (BeansException ex) {
+        destroySingleton(beanName);
+        throw ex;
+      }
+     });
+     bean = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);
+    }else if (mbd.isPrototype()) {//原型Bean实例化
      Object prototypeInstance = null;
      try {
       beforePrototypeCreation(beanName);
       prototypeInstance = createBean(beanName, mbd, args);
-		 }finally {
+     }finally {
       afterPrototypeCreation(beanName);
      }
      bean = getObjectForBeanInstance(prototypeInstance, name, beanName, mbd);
@@ -209,25 +208,25 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
      if (scope == null) {
       //作用域不存在
      }
-		 try {
+     try {
       Object scopedInstance = scope.get(beanName, () -> {
        beforePrototypeCreation(beanName);
-			 try {
-	      return createBean(beanName, mbd, args);
-			 }finally {
-				afterPrototypeCreation(beanName);
-			 }
-			});
-		  bean = getObjectForBeanInstance(scopedInstance, name, beanName, mbd);
-		 }catch (IllegalStateException ex) {
-			//作用域没激活
-		 }
-		}
-	 }catch (BeansException ex) {
-		cleanupAfterBeanCreationFailure(beanName);
-		throw ex;
-	 }
-	}
+       try {
+	    return createBean(beanName, mbd, args);
+       }finally {
+		afterPrototypeCreation(beanName);
+       }
+      });
+      bean = getObjectForBeanInstance(scopedInstance, name, beanName, mbd);
+     }catch (IllegalStateException ex) {
+      //作用域没激活
+     }
+    }
+   }catch (BeansException ex) {
+    cleanupAfterBeanCreationFailure(beanName);
+    throw ex;
+   }
+  }
   //进行类型转换操作
   if (requiredType != null && !requiredType.isInstance(bean)) {
    try {
@@ -238,7 +237,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
     return convertedBean;
    }catch (TypeMismatchException ex) {
     if (logger.isTraceEnabled()) {
-		//类型转换失败
+	 //类型转换失败
     }
     throw new BeanNotOfRequiredTypeException(name, requiredType, bean.getClass());
    }
@@ -256,7 +255,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
  @Override
  protected Object createBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args) throws BeanCreationException {
   RootBeanDefinition mbdToUse = mbd;
-	Class<?> resolvedClass = resolveBeanClass(mbd, beanName);
+  Class<?> resolvedClass = resolveBeanClass(mbd, beanName);
   if (resolvedClass != null && !mbd.hasBeanClass() && mbd.getBeanClassName() != null) {
    mbdToUse = new RootBeanDefinition(mbd);
    mbdToUse.setBeanClass(resolvedClass);
@@ -265,22 +264,22 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
    mbdToUse.prepareMethodOverrides();
   }catch (BeanDefinitionValidationException ex) {
    //方法重写验证失败
-	}
+  }
   try {
    Object bean = resolveBeforeInstantiation(beanName, mbdToUse);//BeanPostProcessor切入点
    if (bean != null) {
     return bean;
    }
   }catch (Throwable ex) {
-	 //BeanPostProcessor失败
+	//BeanPostProcessor失败
   }
   try {
    Object beanInstance = doCreateBean(beanName, mbdToUse, args);//2
    return beanInstance;
   }catch (BeanCreationException | ImplicitlyAppearedSingletonException ex) {
 	 throw ex;
-	}catch (Throwable ex) {
-	}
+  }catch (Throwable ex) {
+  }
  }
  
  protected Object doCreateBean(final String beanName, final RootBeanDefinition mbd, final @Nullable Object[] args) throws BeanCreationException {
@@ -302,13 +301,12 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     try {
      applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
     }catch (Throwable ex) {
-		 //操作失败
-		}
-		mbd.postProcessed = true;
-	 }
-	}
-  boolean earlySingletonExposure = (mbd.isSingleton() && this.allowCircularReferences &&
-				isSingletonCurrentlyInCreation(beanName));
+      //操作失败
+    }
+    mbd.postProcessed = true;
+   }
+  }
+  boolean earlySingletonExposure = (mbd.isSingleton() && this.allowCircularReferences && isSingletonCurrentlyInCreation(beanName));
   if (earlySingletonExposure) {
    addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, mbd, bean));
   }
@@ -317,8 +315,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
    populateBean(beanName, mbd, instanceWrapper);//属性注入
    exposedObject = initializeBean(beanName, exposedObject, mbd);//初始化
   }catch (Throwable ex) {
-	 //异常
-	}
+	//异常
+  }
   if (earlySingletonExposure) {
    Object earlySingletonReference = getSingleton(beanName, false);
    if (earlySingletonReference != null) {
@@ -341,8 +339,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
   try {
    registerDisposableBeanIfNecessary(beanName, bean, mbd);
   }catch (BeanDefinitionValidationException ex) {
-	 //异常
-	}
+	//异常
+  }
   return exposedObject;
  }
 }

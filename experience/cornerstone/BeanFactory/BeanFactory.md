@@ -345,7 +345,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
  }
 }
 ```
-  - createBeanInstance
+- createBeanInstance
 
 ```java
 //AbstractAutowireCapableBeanFactory#createBeanInstance
@@ -466,7 +466,7 @@ public Object instantiate(@Nullable Constructor<?> ctor, Object... args) {
 }
 ```
 
-  - populateBean
+- populateBean
 
 ```java
 protected void populateBean(String beanName, RootBeanDefinition mbd, @Nullable BeanWrapper bw) {
@@ -540,7 +540,7 @@ protected void populateBean(String beanName, RootBeanDefinition mbd, @Nullable B
 }
 ```
 
-  - initializeBean
+- initializeBean
 
 ```java
 //AbstractAutowireCapableBeanFactory#initializeBean

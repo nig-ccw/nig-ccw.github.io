@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.mapper.UserMapper;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,30 +15,35 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @SpringBootApplication
+@MapperScan(value="com.example.demo.mapper")
 public class DemoApplication implements CommandLineRunner {
+    @Autowired
+    private UserMapper userMapper;
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(DemoApplication.class).bannerMode(Banner.Mode.OFF).run(args);
 //        SpringApplication.run(DemoApplication.class, args);
     }
 
+
     @Override
     public void run(String... args) throws Exception {
-        try(BufferedWriter writer=Files.newBufferedWriter(Paths.get("b.sql"));
-            BufferedReader reader =Files.newBufferedReader(Paths.get("a.sql"));
-        ) {
-            reader
-                .lines()
-                .forEach(s -> {
-                    try {
-                        writer.write(deal(s));
-                        writer.newLine();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-        }
-        System.out.println("ok");
+        System.out.println(userMapper.getUser(3));
+//        try(BufferedWriter writer=Files.newBufferedWriter(Paths.get("b.sql"));
+//            BufferedReader reader =Files.newBufferedReader(Paths.get("a.sql"));
+//        ) {
+//            reader
+//                .lines()
+//                .forEach(s -> {
+//                    try {
+//                        writer.write(deal(s));
+//                        writer.newLine();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                });
+//        }
+//        System.out.println("ok");
     }
 
     private String deal(String s){

@@ -24,6 +24,7 @@
 
 ## 思想
 - [IoC](idea/ioc.md)
+
 ## 参考
 - Java 相关
     - [版本](references/versions/j2se.md) 

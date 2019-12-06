@@ -5,7 +5,9 @@
 - 最基本的Java技术就是“反射”编程
 
 > Inversion of Control（控制反转） , Dependency Inversion Principle（依赖倒置） 是设计原理（design principle）
+
 > Dependency Injection（依赖注入） , Dependency Lookup（依赖查找） 是设计模式（pattern）
+
 > IoC Container 是框架（framework）
 
 ## IoC容器

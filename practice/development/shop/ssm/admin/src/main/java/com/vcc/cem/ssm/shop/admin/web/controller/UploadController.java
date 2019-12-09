@@ -1,4 +1,4 @@
-package com.vcc.cem.ssm.shop.admin.service.web.controller;
+package com.vcc.cem.ssm.shop.admin.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

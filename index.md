@@ -11,6 +11,8 @@
 
 ### 设计
 
+- [文档](practice/design/wd.md)
+
 ### 实现
 
 - Shop - [SSM版](practice/development/shop/ssm.md) [SpringBoot版](practice/development/shop/springboot.md)

@@ -1,7 +1,7 @@
-package com.vcc.cem.ssm.shop.admin.service.service.impl;
+package com.vcc.cem.ssm.shop.admin.service.impl;
 
-import com.vcc.cem.ssm.shop.admin.service.dao.TbUserDao;
-import com.vcc.cem.ssm.shop.admin.service.service.TbUserService;
+import com.vcc.cem.ssm.shop.admin.dao.TbUserDao;
+import com.vcc.cem.ssm.shop.admin.service.TbUserService;
 import com.vcc.cem.ssm.shop.commons.dto.BaseResult;
 import com.vcc.cem.ssm.shop.commons.validator.BeanValidator;
 import com.vcc.cem.ssm.shop.domain.TbUser;

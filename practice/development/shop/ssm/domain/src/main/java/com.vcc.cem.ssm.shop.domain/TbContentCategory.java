@@ -1,6 +1,6 @@
 package com.vcc.cem.ssm.shop.domain;
 
-import com.vcc.cem.ssm.shop.commons.constant.Validator;
+import com.vcc.cem.ssm.shop.commons.constant.Validation;
 import com.vcc.cem.ssm.shop.commons.persistence.BaseTreeEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,11 +20,11 @@ import javax.validation.constraints.NotNull;
 @Data
 @EqualsAndHashCode(callSuper=true)
 public class TbContentCategory extends BaseTreeEntity<TbContentCategory> {
-    @Length(min=Validator.CONTENT_CATEGORY_NAME_MIN, max=Validator.CONTENT_CATEGORY_NAME_MAX, message=Validator.CONTENT_CATEGORY_NAME_MESSAGE)
+    @Length(min=Validation.CONTENT_CATEGORY_NAME_MIN, max=Validation.CONTENT_CATEGORY_NAME_MAX, message=Validation.CONTENT_CATEGORY_NAME_MESSAGE)
     private String name;
     private Integer status;
 
-    @NotNull(message=Validator.CONTENT_CATEGORY_ORDER_MESSAGE)
+    @NotNull(message=Validation.CONTENT_CATEGORY_ORDER_MESSAGE)
     private Integer order;
 //    private Boolean isParent;
 //    private TbContentCategory parent;

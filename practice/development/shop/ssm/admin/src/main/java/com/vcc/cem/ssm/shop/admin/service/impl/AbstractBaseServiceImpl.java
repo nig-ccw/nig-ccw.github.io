@@ -1,4 +1,4 @@
-package com.vcc.cem.ssm.shop.admin.service.service.impl;
+package com.vcc.cem.ssm.shop.admin.service.impl;
 
 import com.vcc.cem.ssm.shop.commons.dto.PageInfo;
 import com.vcc.cem.ssm.shop.commons.persistence.BaseDao;

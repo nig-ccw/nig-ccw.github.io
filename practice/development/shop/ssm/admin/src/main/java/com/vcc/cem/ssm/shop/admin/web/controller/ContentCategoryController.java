@@ -1,7 +1,7 @@
-package com.vcc.cem.ssm.shop.admin.service.web.controller;
+package com.vcc.cem.ssm.shop.admin.web.controller;
 
-import com.vcc.cem.ssm.shop.admin.service.service.TbContentCategoryService;
-import com.vcc.cem.ssm.shop.admin.service.web.AbstractBaseTreeController;
+import com.vcc.cem.ssm.shop.admin.service.TbContentCategoryService;
+import com.vcc.cem.ssm.shop.admin.web.AbstractBaseTreeController;
 import com.vcc.cem.ssm.shop.commons.dto.BaseResult;
 import com.vcc.cem.ssm.shop.domain.TbContentCategory;
 import org.apache.commons.lang3.StringUtils;

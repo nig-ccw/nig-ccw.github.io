@@ -34,11 +34,11 @@
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/login" />
             <mvc:exclude-mapping path="/static/**" />
-            <bean class="com.vcc.cem.ssm.shop.admin.service.web.interceptor.LoginInterceptor" />
+            <bean class="com.vcc.cem.ssm.shop.admin.web.interceptor.LoginInterceptor" />
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="com.vcc.cem.ssm.shop.admin.service.web.interceptor.PermissionInterceptor" />
+            <bean class="com.vcc.cem.ssm.shop.admin.web.interceptor.PermissionInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
 

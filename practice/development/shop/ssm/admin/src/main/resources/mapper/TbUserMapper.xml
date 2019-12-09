@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.vcc.cem.ssm.shop.admin.service.dao.TbUserDao">
+<mapper namespace="com.vcc.cem.ssm.shop.admin.dao.TbUserDao">
     <sql id="tbUserColumns">
           a.id,
           a.username,
@@ -8,7 +8,7 @@
           a.phone,
           a.email,
           a.create_date AS createDate,
-          a.update_date AS updateDate,
+          a.update_date AS updateDate
     </sql>
 
     <select id="getById" resultType="TbUser">
@@ -34,7 +34,7 @@
           <include refid="tbUserColumns" />
         FROM
           tb_user AS a
-        ORDER BY a.updateDate DESC
+        ORDER BY a.update_date DESC
     </select>
 
     <select id="page" resultType="TbUser" parameterType="java.util.Map">
@@ -53,7 +53,7 @@
                 AND a.email LIKE CONCAT ('%', #{pageParams.email}, '%')
             </if>
         </where>
-        ORDER BY a.updateDate DESC
+        ORDER BY a.update_date DESC
         LIMIT #{start}, #{length}
     </select>
 

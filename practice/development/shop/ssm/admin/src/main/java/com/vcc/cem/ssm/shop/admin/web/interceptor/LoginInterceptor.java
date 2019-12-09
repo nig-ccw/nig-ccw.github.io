@@ -1,4 +1,4 @@
-package com.vcc.cem.ssm.shop.admin.service.web.interceptor;
+package com.vcc.cem.ssm.shop.admin.web.interceptor;
 
 import com.vcc.cem.ssm.shop.commons.constant.Constant;
 import com.vcc.cem.ssm.shop.domain.TbUser;

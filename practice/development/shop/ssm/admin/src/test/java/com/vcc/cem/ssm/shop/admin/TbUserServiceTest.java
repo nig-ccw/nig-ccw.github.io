@@ -1,6 +1,6 @@
-package com.vcc.cem.ssm.shop.admin.service;
+package com.vcc.cem.ssm.shop.admin;
 
-import com.vcc.cem.ssm.shop.admin.service.service.TbUserService;
+import com.vcc.cem.ssm.shop.admin.service.TbUserService;
 import com.vcc.cem.ssm.shop.domain.TbUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,10 +29,10 @@ public class TbUserServiceTest {
     @Test
     public void testInsert() {
         TbUser tbUser = new TbUser();
-        tbUser.setUsername("Lusifer");
+        tbUser.setUsername("vcc12345");
         tbUser.setPhone("15888888888");
-        tbUser.setEmail("lusifer@funtl.com");
-        tbUser.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        tbUser.setEmail("vcc@vcc.com");
+        tbUser.setPassword("vcc12345");
         tbUser.setCreateDate(new Date());
         tbUser.setUpdateDate(new Date());
 
@@ -41,20 +41,29 @@ public class TbUserServiceTest {
 
     @Test
     public void testDelete() {
-        tbUserService.delete(39L);
+        tbUserService.delete(1L);
     }
 
     @Test
     public void testGetById() {
-        TbUser tbUser = tbUserService.getById(36L);
-        System.out.println(tbUser.getUsername());
+        TbUser tbUser = tbUserService.getById(1L);
+        if (tbUser != null) {
+            System.out.println(tbUser.getUsername());
+        }
     }
 
     @Test
     public void testUpdate() {
-        TbUser tbUser = tbUserService.getById(36L);
-        tbUser.setUsername("Lusifer");
+        TbUser tbUser = tbUserService.getById(1L);
+        if (tbUser != null) {
+            tbUser.setUsername("Lusifer2");
+        }
         tbUserService.update(tbUser);
+    }
+
+    @Test
+    public void login(){
+        tbUserService.login("vcc@vcc.com","vcc12345");
     }
 
     @Test

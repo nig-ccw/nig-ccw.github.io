@@ -1,4 +1,4 @@
-package com.vcc.cem.ssm.shop.admin.service.web;
+package com.vcc.cem.ssm.shop.admin.web;
 
 import com.vcc.cem.ssm.shop.commons.dto.BaseResult;
 import com.vcc.cem.ssm.shop.commons.persistence.BaseTreeEntity;

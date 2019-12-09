@@ -1,6 +1,6 @@
-package com.vcc.cem.ssm.shop.admin.service.web.controller;
+package com.vcc.cem.ssm.shop.admin.web.controller;
 
-import com.vcc.cem.ssm.shop.admin.service.service.TbUserService;
+import com.vcc.cem.ssm.shop.admin.service.TbUserService;
 import com.vcc.cem.ssm.shop.commons.constant.Constant;
 import com.vcc.cem.ssm.shop.domain.TbUser;
 import org.springframework.beans.factory.annotation.Autowired;

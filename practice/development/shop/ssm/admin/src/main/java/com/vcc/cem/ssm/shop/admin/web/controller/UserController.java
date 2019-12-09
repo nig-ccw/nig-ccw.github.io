@@ -1,7 +1,7 @@
-package com.vcc.cem.ssm.shop.admin.service.web.controller;
+package com.vcc.cem.ssm.shop.admin.web.controller;
 
-import com.vcc.cem.ssm.shop.admin.service.service.TbUserService;
-import com.vcc.cem.ssm.shop.admin.service.web.AbstractBaseController;
+import com.vcc.cem.ssm.shop.admin.service.TbUserService;
+import com.vcc.cem.ssm.shop.admin.web.AbstractBaseController;
 import com.vcc.cem.ssm.shop.commons.dto.BaseResult;
 import com.vcc.cem.ssm.shop.domain.TbUser;
 import org.apache.commons.lang3.StringUtils;

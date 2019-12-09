@@ -1,4 +1,4 @@
-package com.vcc.cem.ssm.shop.admin.service.dao;
+package com.vcc.cem.ssm.shop.admin.dao;
 
 import com.vcc.cem.ssm.shop.commons.persistence.BaseDao;
 import com.vcc.cem.ssm.shop.domain.TbContent;

@@ -4,7 +4,7 @@ package com.vcc.cem.ssm.shop.commons.constant;
  * @author czh
  * @date 2019-12-06
  */
-public interface Validator {
+public interface Validation {
     int USER_NAME_MIN=6;
     int USER_NAME_MAX=20;
     int TITLE_MIN=1;

@@ -37,7 +37,7 @@ public interface ListableBeanFactory extends BeanFactory {
  Map<String, Object> getBeansWithAnnotation(Class<? extends Annotation> annotationType) throws BeansException;
  @Nullable <A extends Annotation> A findAnnotationOnBean(String beanName, Class<A> annotationType) throws NoSuchBeanDefinitionException;
 
- }
+}
 ```
 
 - HierarchicalBeanFactory [参考 BeanFactory](../BeanFactory/BeanFactory.md)
@@ -135,7 +135,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
  @Nullable Object resolveDependency(DependencyDescriptor descriptor, @Nullable String requestingBeanName) throws BeansException;
  @Nullable Object resolveDependency(DependencyDescriptor descriptor, @Nullable String requestingBeanName, @Nullable Set<String> autowiredBeanNames, @Nullable TypeConverter typeConverter) throws BeansException;
 
- }
+}
 ```
 
 ## 子接口

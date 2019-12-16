@@ -1,0 +1,21 @@
+### 商品列表
+GET http://localhost:8080/sell/buyer/product/list
+Accept: application/json
+
+### 下单
+POST http://localhost:8080/sell/buyer/order/create
+Content-Type: application/x-www-form-urlencoded
+
+name=sdsdsds&phone=19999909382&address=sasas&openid=dsdsdsds&items=[{"productId": "mxbnr2o2arIZaA2FjmnR","productQuantity": 2},{"productId": "1234567","productQuantity": 3}]
+
+### 订单列表
+GET http://localhost:8080/sell/buyer/order/list?openid=dsdsdsds
+Accept: application/json
+
+### 订单详情列表
+GET http://localhost:8080/sell/buyer/order/detail?openid=dsdsdsds&orderId=34158228758251637835
+Accept: application/json
+
+### 取消订单
+POST http://localhost:8080/sell/buyer/order/cancel?openid=dsdsdsds&orderId=34158228758251637835
+Content-Type: application/json

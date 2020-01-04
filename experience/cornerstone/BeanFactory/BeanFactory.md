@@ -1,6 +1,6 @@
 # BeanFactory
 
-##接口
+## 接口
 
 - BeanFactory
 
@@ -137,45 +137,86 @@ public interface SingletonBeanRegistry {
 
 ```java
 public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport implements ConfigurableBeanFactory {
+ protected Object getObjectForBeanInstance(Object beanInstance, String name, String beanName, @Nullable RootBeanDefinition mbd) {
+  if (BeanFactoryUtils.isFactoryDereference(name)) {
+   if (beanInstance instanceof NullBean) {
+    return beanInstance;
+   }
+   if (!(beanInstance instanceof FactoryBean)) {
+    throw new BeanIsNotAFactoryException(beanName, beanInstance.getClass());
+   }
+   if (mbd != null) {
+    mbd.isFactoryBean = true;
+   }
+   return beanInstance;
+  }
+
+  if (!(beanInstance instanceof FactoryBean)) {
+   return beanInstance;
+  }
+
+  Object object = null;
+  if (mbd != null) {
+   mbd.isFactoryBean = true;
+  }
+  else {
+   object = getCachedObjectForFactoryBean(beanName);
+  }
+  //如果获取到的 FactoryBean 为空，说明这个 bean 没有实现 FactoryBean 接口
+  if (object == null) {
+   FactoryBean<?> factory = (FactoryBean<?>) beanInstance;
+   //如果 bean 已经加载过，则获取合并过后的 RootBeanDefinition
+   if (mbd == null && containsBeanDefinition(beanName)) {
+    mbd = getMergedLocalBeanDefinition(beanName);
+   }
+   boolean synthetic = (mbd != null && mbd.isSynthetic());
+   object = getObjectFromFactoryBean(factory, beanName, !synthetic);
+  }
+  return object;
+ }   
+ 
  protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredType, @Nullable final Object[] args, boolean typeCheckOnly) throws BeansException {
-  final String beanName = transformedBeanName(name);
+  final String beanName = transformedBeanName(name);//&beanName 是 FactoryBean的实例，此处需要的是 FactoryBean#getObject() 返回的对象（beanName）
   Object bean;
   //先查单例缓存
-  Object sharedInstance = getSingleton(beanName);
+  Object sharedInstance = getSingleton(beanName);//DefaultSingletonBeanRegistry#getSingleton
   if (sharedInstance != null && args == null) {
-   bean = getObjectForBeanInstance(sharedInstance, name, beanName, null);
+   bean = getObjectForBeanInstance(sharedInstance, name, beanName, null);//从已经加载的 object 中获取 bean 
   }else {
-   if (isPrototypeCurrentlyInCreation(beanName)) {//循环引用抛异常
+   if (isPrototypeCurrentlyInCreation(beanName)) {//检查要获取的 bean 是不是当前线程正在创建中的 bean
     throw new BeanCurrentlyInCreationException(beanName);
    }
-   //父级BeanFactory存在，当前BeanFactory不包含BeanDefinition，交由父级BeanFactory处理
+   //检查当前 BeanFactory 的父类 BeanFactory 是不是不为空，并且要获取的 bean 不包含在当前 BeanFactory 中
    BeanFactory parentBeanFactory = getParentBeanFactory();
    if (parentBeanFactory != null && !containsBeanDefinition(beanName)) {
-    String nameToLookup = originalBeanName(name);
+    String nameToLookup = originalBeanName(name);//还原要获取的 bean 的 beanName
     if (parentBeanFactory instanceof AbstractBeanFactory) {
-     return ((AbstractBeanFactory) parentBeanFactory).doGetBean(nameToLookup, requiredType, args, typeCheckOnly);
+     return ((AbstractBeanFactory) parentBeanFactory).doGetBean(nameToLookup, requiredType, args, typeCheckOnly);//交由父类 BeanFactory 处理
     }else if (args != null) {
-     return (T) parentBeanFactory.getBean(nameToLookup, args);
+     return (T) parentBeanFactory.getBean(nameToLookup, args);//指定参数
 	}else if (requiredType != null) {
-	 return parentBeanFactory.getBean(nameToLookup, requiredType);
+	 return parentBeanFactory.getBean(nameToLookup, requiredType);//指定类型
     }else {
-	 return (T) parentBeanFactory.getBean(nameToLookup);
+	 return (T) parentBeanFactory.getBean(nameToLookup);//强制转换
 	}
    }
+   //typeCheckOnly默认为false
    if (!typeCheckOnly) {
-    markBeanAsCreated(beanName);
+    markBeanAsCreated(beanName);//如果当前 bean 不在正在创建中的 bean 的缓存集合（alreadyCreated）中，就加进去
    }
    try {
-    //多级存在，将BeanDefinition合并
+    //合并要获取的 bean 的属性并把属性赋值给一个 RootBeanDefinition
 	final RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
+	//检查合并之后的 RootBeanDefinition 的是不是抽象的，还会检查如果获取 bean 的参数不空的情况下，bean 的类型是 singleton 的就会报错，因为单例情况下 bean 都是一样的，只有 prototype 情况下才能不一致
 	checkMergedBeanDefinition(mbd, beanName, args);
-    //先处理依赖
+    //先处理依赖，获取当前 bean 依赖的 bean 名称的数组
     String[] dependsOn = mbd.getDependsOn();
     if (dependsOn != null) {
      for (String dep : dependsOn) {
 	  if (isDependent(beanName, dep)) {
        //循环依赖抛异常
 	  }
+	  //将要获取的 bean 的 beanName 和所依赖到的 bean 的 beanName 之间的关系缓存起来
       registerDependentBean(dep, beanName);
 	  try {
        getBean(dep);
@@ -183,7 +224,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	  }
      }
     }
-    if (mbd.isSingleton()) {//单例Bean实例化
+    //单例Bean实例化
+    if (mbd.isSingleton()) {
      sharedInstance = getSingleton(beanName, () -> {
       try {
         return createBean(beanName, mbd, args);//1
@@ -193,16 +235,20 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
       }
      });
      bean = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);
-    }else if (mbd.isPrototype()) {//原型Bean实例化
+    }
+    //原型Bean实例化
+    else if (mbd.isPrototype()) {
      Object prototypeInstance = null;
      try {
-      beforePrototypeCreation(beanName);
+      beforePrototypeCreation(beanName);//将需要创建的 bean 的 beanName 放到 ThreadLocal 中
       prototypeInstance = createBean(beanName, mbd, args);
      }finally {
-      afterPrototypeCreation(beanName);
+      afterPrototypeCreation(beanName);//将需要创建的 bean 的 beanName 从 ThreadLocal 中移除
      }
      bean = getObjectForBeanInstance(prototypeInstance, name, beanName, mbd);
-    }else {
+    }
+    //其他作用域Bean实例化
+    else {
      String scopeName = mbd.getScope();
      final Scope scope = this.scopes.get(scopeName);
      if (scope == null) {
@@ -210,11 +256,11 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
      }
      try {
       Object scopedInstance = scope.get(beanName, () -> {
-       beforePrototypeCreation(beanName);
+       beforePrototypeCreation(beanName);//将需要创建的 bean 的 beanName 放到 ThreadLocal 中
        try {
 	    return createBean(beanName, mbd, args);
        }finally {
-		afterPrototypeCreation(beanName);
+		afterPrototypeCreation(beanName);//将需要创建的 bean 的 beanName 从 ThreadLocal 中移除
        }
       });
       bean = getObjectForBeanInstance(scopedInstance, name, beanName, mbd);
@@ -633,4 +679,48 @@ protected void invokeCustomInitMethod(String beanName, final Object bean, RootBe
 
 > doCreateBean = 实例化(Cglib) -> 属性注入 -> 初始化(Aware->BeforeInstantiation->afterPropertiesSet->init方法->AfterInitialization)
 
-##具体类
+## 具体类
+
+```java
+public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements SingletonBeanRegistry {
+ private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
+ private final Map<String, Object> earlySingletonObjects = new HashMap<>(16);
+ private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
+ private final Set<String> singletonsCurrentlyInCreation = Collections.newSetFromMap(new ConcurrentHashMap<>(16));
+ private final Map<String, Object> disposableBeans = new LinkedHashMap<>();
+ private final Map<String, Set<String>> containedBeanMap = new ConcurrentHashMap<>(16);
+ private final Map<String, Set<String>> dependentBeanMap = new ConcurrentHashMap<>(64);
+ private final Map<String, Set<String>> dependenciesForBeanMap = new ConcurrentHashMap<>(64);
+ 
+ @Override
+ @Nullable
+ public Object getSingleton(String beanName) {
+  return getSingleton(beanName, true);
+ }
+ 
+ //具体实现
+ protected Object getSingleton(String beanName, boolean allowEarlyReference) {
+  //在已经注册了的单例 map 集合（singletonObjects）中获取特定 beanName 的 bean
+  Object singletonObject = this.singletonObjects.get(beanName);
+  //检查这个 bean 是不是 null，并且这个 bean 不在正在创建中的 bean 的 map 缓存（singletonsCurrentlyInCreation）中
+  if (singletonObject == null && isSingletonCurrentlyInCreation(beanName)) {
+   synchronized (this.singletonObjects) {
+    //从已经缓存了的单例对象集合中获取 beanName 对应的 Bean
+    singletonObject = this.earlySingletonObjects.get(beanName);
+    //如果不存在，并且允许早期引用当前创建的对象
+    if (singletonObject == null && allowEarlyReference) {
+     //根据 beanName 获取在可以在调用时返回单例 Object 实例的工厂。
+     ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName);
+     //如果返回的工厂不为空就把对应的 beanName 放到 earlySingletonObjects 中，并移除 singletonFactories 中的值
+     if (singletonFactory != null) {
+      singletonObject = singletonFactory.getObject();
+      this.earlySingletonObjects.put(beanName, singletonObject);
+      this.singletonFactories.remove(beanName);
+     }
+    }
+   }
+  }
+  return singletonObject;
+ }
+}
+```
